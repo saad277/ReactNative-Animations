@@ -6,5 +6,6 @@ export const createAnimation = (value, duration, easing, delay = 0) => {
     duration,
     easing,
     delay,
+    useNativeDriver: true,
   });
 };

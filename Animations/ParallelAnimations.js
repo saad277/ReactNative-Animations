@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import {View, Text, Animated} from 'react-native';
+import {
+  View,
+  Text,
+  Animated,
+  StyleSheet,
+  TouchableHighlight,
+  Easing,
+  Button,
+} from 'react-native';
 import {createAnimation} from '../utils/createAnimation';
 
 class ParallelAnimation extends Component {
@@ -38,11 +46,31 @@ class ParallelAnimation extends Component {
     });
 
     return (
-      <View>
-        <Text>Parallel</Text>
+      <View style={[styles.container]}>
+        <Animated.View style={{transform: [{scale: scaleText}]}}>
+          <Text>Welcome</Text>
+        </Animated.View>
+        <Animated.View style={{marginTop: 20, transform: [{rotate: spinText}]}}>
+          <Text style={{fontSize: 20}}>to the App!</Text>
+        </Animated.View>
+        <Animated.View
+          style={{
+            marginTop: 20,
+            transform: [{translateY: introButton}],
+          }}>
+          <Button title="start" color="green" onPress={() => this.animate()} />
+        </Animated.View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
+});
 
 export default ParallelAnimation;
