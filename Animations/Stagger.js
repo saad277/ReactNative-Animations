@@ -38,7 +38,7 @@ class Stagger extends Component {
         useNativeDriver: true,
       });
     });
-    Animated.stagger(10,animations).start();
+    Animated.stagger(10, animations).start();
   }
 
   render() {
