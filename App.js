@@ -5,9 +5,10 @@ import Timings from './Animations/TimingExamples';
 import Spring from './Animations/Spring';
 import Parallel from './Animations/ParallelAnimations';
 import Sequence from './Animations/Sequence';
+import Stagger from './Animations/Stagger';
 
 const App = () => {
-  return <Sequence />;
+  return <Stagger />;
 };
 
 export default App;
