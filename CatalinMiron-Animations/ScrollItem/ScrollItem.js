@@ -3,22 +3,23 @@
 // Background image: https://www.pexels.com/photo/pink-rose-closeup-photography-1231265/
 import React from 'react';
 import {
-  StatusBar,
   FlatList,
   Image,
   Animated,
   Text,
   View,
-  Dimensions,
-  StyleSheet,
   TouchableOpacity,
   Easing,
   SafeAreaViewBase,
   SafeAreaView,
+  StyleSheet
 } from 'react-native';
 
-const {width, height} = Dimensions.get('screen');
+import { styles } from "./Styles"
+
 import faker from 'faker';
+
+const BG_IMG = "https://images.pexels.com/photos/1231265/pexels-photo-1231265.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
 
 faker.seed(10);
 const Data = [...Array(30).keys()].map((_, i) => {
@@ -34,49 +35,35 @@ const Data = [...Array(30).keys()].map((_, i) => {
   };
 });
 
-const SPACING = 20;
-const AVATAR_SIZE = 70;
-
 const ScrollItem = () => {
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     return (
-      <View style={styles.listContainer}>
-        <Image source={{uri: item.image}} style={styles.image} />
+      <View style={styles.itemContainer}>
+        <Image source={{ uri: item.image }} style={styles.image} />
         <View>
-          <Text>{item.name}</Text>
-          <Text>{item.jobTitle}</Text>
-          <Text>{item.email}</Text>
+          <Text style={styles.name}>{item.name}</Text>
+          <Text style={styles.jobTitle}>{item.jobTitle}</Text>
+          <Text style={styles.email}>{item.email}</Text>
         </View>
-      </View>
+      </View >
     );
   };
 
   return (
     <View style={styles.container}>
+      <Image
+        source={{ uri: BG_IMG }}
+        style={StyleSheet.absoluteFillObject}
+        blurRadius={50}
+      />
       <FlatList
         data={Data}
         keyExtractor={(item) => item.key}
         renderItem={renderItem}
+        contentContainerStyle={styles.flatListContainer}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  listContainer: {
-    flexDirection: 'row',
-  },
-
-  image: {
-    width: AVATAR_SIZE,
-    height: AVATAR_SIZE,
-    borderRadius: AVATAR_SIZE,
-    marginRight: SPACING / 2,
-  },
-});
 
 export default ScrollItem;
