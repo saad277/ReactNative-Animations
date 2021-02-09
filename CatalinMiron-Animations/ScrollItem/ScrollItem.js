@@ -1,7 +1,7 @@
 // Inspiration: https://dribbble.com/shots/14154226-Rolodex-Scrolling-Animation/attachments/5780833?mode=media
 // Photo by Sharefaith from Pexels
 // Background image: https://www.pexels.com/photo/pink-rose-closeup-photography-1231265/
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 import {
   FlatList,
   Image,
@@ -15,7 +15,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import {styles, ITEM_SIZE} from './Styles';
+import { styles, ITEM_SIZE } from './Styles';
 
 import faker from 'faker';
 
@@ -39,41 +39,45 @@ const Data = [...Array(30).keys()].map((_, i) => {
 const ScrollItem = () => {
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  const renderItem = ({item, index}) => {
-    const inputRange = [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)];
+  const renderItem = ({ item, index }) => {
+
 
     const scale = scrollY.interpolate({
-      inputRange,
+      inputRange: [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 2)],
+      outputRange: [1, 1, 1, 0],
+    });
+
+    const opacity = scrollY.interpolate({
+      inputRange: [-1, 0, ITEM_SIZE * index, ITEM_SIZE * (index + 1)],
       outputRange: [1, 1, 1, 0],
     });
 
     console.log(scale)
 
     return (
-      <View style={[styles.itemContainer]}>
-        <Image source={{uri: item.image}} style={styles.image} />
+      <Animated.View style={[styles.itemContainer, { transform: [{ scale: scale }], opacity }]}>
+        <Image source={{ uri: item.image }} style={styles.image} />
         <View>
           <Text style={styles.name}>{item.name}</Text>
           <Text style={styles.jobTitle}>{item.jobTitle}</Text>
           <Text style={styles.email}>{item.email}</Text>
         </View>
-      </View>
+      </Animated.View>
     );
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <Image
-        source={{uri: BG_IMG}}
+        source={{ uri: BG_IMG }}
         style={StyleSheet.absoluteFillObject}
         blurRadius={50}
       />
       <Animated.FlatList
         data={Data}
         onScroll={Animated.event([
-          {nativeEvent: {contentOffset: {y: scrollY}}},
-          {useNativeDriver: true},
-        ])}
+          { nativeEvent: { contentOffset: { y: scrollY } }, },
+        ], { useNativeDriver: true })}
         keyExtractor={(item) => item.key}
         renderItem={renderItem}
         contentContainerStyle={styles.flatListContainer}
