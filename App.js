@@ -9,9 +9,10 @@ import Stagger from './Animations/Stagger';
 
 //Catalin Miron
 import ScrollItem from './CatalinMiron-Animations/ScrollItem';
+import { Carousel } from "./CatalinMiron-Animations/Carousel"
 
 const App = () => {
-  return <ScrollItem />;
+  return <Carousel />;
 };
 
 export default App;
